@@ -101,4 +101,21 @@ class Dashboard extends CI_Controller {
                 redirect('dashboard/anggota');
         }
 
+        public function peminjam(){
+                $peminjam = $this->Mdashboard->get_peminjam()->result();
+                $data = array(
+                        'title' => 'Peminjam | Pinjambuku',
+                        'peminjam' => $peminjam
+                );
+                $this->load->view('home/_header', $data);
+                $this->load->view('home/peminjam');
+                $this->load->view('home/_footer');
+        }
+
+        public function delpinjam($id){
+                $this->Mdashboard->delpinjam($id);
+                $this->session->set_flashdata('berhasil', 'Data berhasil dihapus');
+                redirect('dashboard/peminjam');
+        }
+
 }

@@ -44,7 +44,7 @@
 										<tbody>
 											<?php
                                                 $no=1; 
-                                                foreach($buku as $data){
+                                                foreach($peminjam as $data){
                                             ?>
 											<tr>
 												<td><?=$no++?></td>
@@ -52,14 +52,14 @@
 												<td><?=$data->nama?></td>
 												<td><?=date('d M Y', strtotime($data->tgl_pinjam));?></td>
 												<td><a
-														href="<?php echo ($data->status == 'dipinjamkan') ? 'proses/proses_updatestatuspinjam.php?idkembali='.$data->d_pinjam: '#' ?>">
+														href="<?php echo ($data->status == 'dipinjamkan') ? base_url('dashboard/changestatus/'.$data->id_pinjam) : '#' ?>">
 														<div
 															class="<?php echo ($data->status == 'dipinjamkan') ? 'btn btn-danger' : 'btn btn-success' ?>">
 															<?=$data->status?></div>
 													</a></td>
 												<td>
 													<a onclick="return confirm('Data akan dihapus!')"
-														href="<?=base_url('dashboard/delbook/'.$data->id_pinjam)?>"
+														href="<?=base_url('dashboard/delpinjam/'.$data->id_pinjam)?>"
 														onclick="" class="btn btn-danger ml-2">
 														Hapus
 													</a>
@@ -78,3 +78,48 @@
 
 	</section>
 </div>
+
+<!-- Modal tambah buku -->
+<div id="tambahbuku" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="<?=base_url('dashboard/addbook')?>" method="POST">
+				<div class="modal-header">
+					<h4 class="modal-title">Tambah Peminjam Buku</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>NBSN</label>
+						<input type="number" name="nbsn" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Judul</label>
+						<input type="text" name="judul" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Pengarang</label>
+						<input type="text" name="pengarang" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Penerbit</label>
+						<input type="text" name="penerbit" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Tahun</label>
+						<input type="number" name="tahun" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Stok</label>
+						<input type="number" name="stok" class="form-control" required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Batal">
+					<input type="submit" name="tambah" class="btn btn-success" value="Tambah">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Modal tambah buku end -->

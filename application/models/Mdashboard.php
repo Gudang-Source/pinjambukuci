@@ -68,5 +68,17 @@
             $this->db->delete('anggota');
         }
 
+        public function get_peminjam(){
+            $this->db->join('buku', 'buku.nbsn=pinjam.nbsn');
+            $this->db->join('anggota', 'anggota.id_anggota=pinjam.id_anggota');
+            $query = $this->db->get('pinjam');
+            return $query;
+        }
+
+        public function delpinjam($id){
+            $this->db->where('id_pinjam', $id);
+            $this->db->delete('pinjam');
+        }
+
     }
 ?>
