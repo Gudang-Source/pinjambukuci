@@ -83,35 +83,38 @@
 <div id="tambahbuku" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="<?=base_url('dashboard/addbook')?>" method="POST">
+			<form action="<?=base_url('dashboard/pinjambook')?>" method="POST">
 				<div class="modal-header">
-					<h4 class="modal-title">Tambah Peminjam Buku</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Tambah Pinjam Buku</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label>NBSN</label>
-						<input type="number" name="nbsn" class="form-control" required>
+						<label>Nama Buku</label>
+						<select name="nbsn" class="form-control" required>
+							<?php
+                                foreach($buku as $b){
+                            ?>
+							<option value="<?=$b->nbsn?>"><?=$b->judul?></option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="form-group">
-						<label>Judul</label>
-						<input type="text" name="judul" class="form-control" required>
+						<label>Nama Anggota</label>
+						<select name="id_anggota" class="form-control" required>
+							<?php
+                                foreach($anggota as $a){
+                            ?>
+							<option value="<?=$a->id_anggota?>"><?=$a->nama?></option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="form-group">
-						<label>Pengarang</label>
-						<input type="text" name="pengarang" class="form-control" required>
+						<label>Tgl Pinjam</label>
+						<input type="date" name="tgl_pinjam" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Penerbit</label>
-						<input type="text" name="penerbit" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Tahun</label>
-						<input type="number" name="tahun" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Stok</label>
-						<input type="number" name="stok" class="form-control" required>
+						<label>Status</label>
+						<input type="text" name="status" class="form-control" value="dipinjamkan" readonly>
 					</div>
 				</div>
 				<div class="modal-footer">

@@ -75,6 +75,23 @@
             return $query;
         }
 
+        public function pinjam($data){
+            $param = array(
+                'nbsn' => $data['nbsn'],
+                'id_anggota' => $data['id_anggota'],
+                'tgl_pinjam' => $data['tgl_pinjam'],
+                'status' => $data['status']
+            );
+            $this->db->insert('pinjam', $param);
+        }
+
+        public function change($id){
+            $data = array(
+                'status' => 'dikembalikan'
+            );
+            $this->db->update('pinjam', $data, array('id_pinjam'=>$id));
+        }
+
         public function delpinjam($id){
             $this->db->where('id_pinjam', $id);
             $this->db->delete('pinjam');

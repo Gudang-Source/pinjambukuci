@@ -36,17 +36,13 @@
 				<li class="dropdown"><a href="#" data-toggle="dropdown"
 						class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 						<img alt="image" src="<?=base_url()?>assets/admin/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-						<div class="d-sm-none d-lg-inline-block">Hi, Izza</div>
+						<div class="d-sm-none d-lg-inline-block">Hi, <?=$user?></div>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right">
 						<div class="dropdown-title">Logged in 5 min ago</div>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item has-icon text-danger" href="#" onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">
+						<a class="dropdown-item has-icon text-danger" href="<?=base_url('login/logout')?>">
 							<i class="fas fa-sign-out-alt"></i> Logout
-							<form id="logout-form" action="#" method="POST" style="display: none;">
-								@csrf
-							</form>
 						</a>
 					</div>
 				</li>

@@ -6,11 +6,21 @@ class Dashboard extends CI_Controller {
         function __construct(){
                 parent::__construct();
                 $this->load->model('Mdashboard');
+
+                if($this->session->userdata('user')){
+
+		}
+		else{
+			redirect('login');
+		}
         }
 
 	public function index(){
+                $username = $this->session->userdata('user');
+                $quser = $this->db->get_where('login', array('username'=>$username))->row();
                 $data = array(
-                        'title' => 'Dashboard | Pinjambuku'
+                        'title' => 'Dashboard | Pinjambuku',
+                        'user' => $quser->nama
                 );
                 $this->load->view('home/_header', $data);
                 $this->load->view('home/home');
@@ -18,10 +28,13 @@ class Dashboard extends CI_Controller {
         }
 
         public function buku(){
+                $username = $this->session->userdata('user');
+                $quser = $this->db->get_where('login', array('username'=>$username))->row();
                 $buku = $this->Mdashboard->get_buku()->result();
                 $data = array(
                         'title' => 'Buku | Pinjambuku',
-                        'buku' => $buku
+                        'buku' => $buku,
+                        'user' => $quser->nama
                 );
                 $this->load->view('home/_header', $data);
                 $this->load->view('home/buku');
@@ -36,10 +49,13 @@ class Dashboard extends CI_Controller {
         }
 
         public function editbook($id){
+                $username = $this->session->userdata('user');
+                $quser = $this->db->get_where('login', array('username'=>$username))->row();
                 $buku = $this->Mdashboard->get_buku($id)->row();
                 $data = array(
                         'title' => 'Edit Buku | Pinjambuku',
-                        'buku' => $buku
+                        'buku' => $buku,
+                        'user' => $quser->nama
                 );
                 $this->load->view('home/_header', $data);
                 $this->load->view('home/edit_buku');
@@ -60,10 +76,13 @@ class Dashboard extends CI_Controller {
         }
 
         public function anggota(){
+                $username = $this->session->userdata('user');
+                $quser = $this->db->get_where('login', array('username'=>$username))->row();
                 $anggota = $this->Mdashboard->get_anggota()->result();
                 $data = array(
                         'title' => 'Anggota | Pinjambuku',
-                        'anggota' => $anggota
+                        'anggota' => $anggota,
+                        'user' => $quser->nama
                 );
                 $this->load->view('home/_header', $data);
                 $this->load->view('home/anggota');
@@ -78,10 +97,13 @@ class Dashboard extends CI_Controller {
         }
 
         public function editanggota($id){
+                $username = $this->session->userdata('user');
+                $quser = $this->db->get_where('login', array('username'=>$username))->row();
                 $anggota = $this->Mdashboard->get_anggota($id)->row();
                 $data = array(
                         'title' => 'Edit Anggota | Pinjambuku',
-                        'anggota' => $anggota
+                        'anggota' => $anggota,
+                        'user' => $quser->nama
                 );
                 $this->load->view('home/_header', $data);
                 $this->load->view('home/edit_anggota');
@@ -102,14 +124,34 @@ class Dashboard extends CI_Controller {
         }
 
         public function peminjam(){
+                $username = $this->session->userdata('user');
+                $quser = $this->db->get_where('login', array('username'=>$username))->row();
+                $buku = $this->Mdashboard->get_buku()->result();
+                $anggota = $this->Mdashboard->get_anggota()->result();
                 $peminjam = $this->Mdashboard->get_peminjam()->result();
                 $data = array(
                         'title' => 'Peminjam | Pinjambuku',
-                        'peminjam' => $peminjam
+                        'peminjam' => $peminjam,
+                        'buku' => $buku,
+                        'anggota' => $anggota,
+                        'user' => $quser->nama
                 );
                 $this->load->view('home/_header', $data);
                 $this->load->view('home/peminjam');
                 $this->load->view('home/_footer');
+        }
+
+        public function pinjambook(){
+                $input = $this->input->post(null, false);
+                $this->Mdashboard->pinjam($input);
+                $this->session->set_flashdata('berhasil', 'Data pinjaman berhasil ditambahkan');
+                redirect('dashboard/peminjam');
+        }
+
+        public function changestatus($id){
+                $this->Mdashboard->change($id);
+                $this->session->set_flashdata('berhasil', 'Status pinjam berhasil diubah');
+                redirect('dashboard/peminjam');
         }
 
         public function delpinjam($id){
