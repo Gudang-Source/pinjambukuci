@@ -37,73 +37,76 @@
 			}
 		}
 
-		// public function index_post(){
-		// 	$data = [
-		// 		'nim'=>$this->post('nim'),
-		// 		'nama'=>$this->post('nama'),
-		// 		'alamat'=>$this->post('alamat'),
-		// 		'tgl_lahir'=>$this->post('tgl_lahir')
-		// 	];
+		public function index_post(){
+			$data = [
+				'nbsn'=>$this->post('nbsn'),
+				'judul'=>$this->post('judul'),
+				'pengarang'=>$this->post('pengarang'),
+                'penerbit'=>$this->post('penerbit'),
+                'tahun'=>$this->post('tahun'),
+                'stok'=>$this->post('stok')
+			];
 
-		// 	if($this->Mrest->input_mhs($data)>0){
-		// 		$this->response([
-        //             	'status' => TRUE,
-        //             	'message'=>'data mahasiswa telah ditambahkan'
-        //         	], REST_Controller::HTTP_CREATED);
-		// 	}
-		// 	else{
-		// 		$this->response([
-	    //                 'status' => FALSE,
-	    //                 'message' => 'gagal menambahkan data!'
-        //         	], REST_Controller::HTTP_BAD_REQUEST);
-		// 	}
-		// }
+			if($this->Mrestbuku->input_buku($data)>0){
+				$this->response([
+                    	'status' => TRUE,
+                    	'message'=>'buku telah ditambahkan'
+                	], REST_Controller::HTTP_CREATED);
+			}
+			else{
+				$this->response([
+	                    'status' => FALSE,
+	                    'message' => 'gagal menambahkan data!'
+                	], REST_Controller::HTTP_BAD_REQUEST);
+			}
+        }
+        
+        public function index_put(){
+			$id = $this->put('nbsn');
+			$data = [
+				'judul'=>$this->post('judul'),
+				'pengarang'=>$this->post('pengarang'),
+                'penerbit'=>$this->post('penerbit'),
+                'tahun'=>$this->post('tahun'),
+                'stok'=>$this->post('stok')
+			];
+			if($this->Mrestbuku->edit_buku($data, $id)>	0){
+				$this->response([
+                    	'status' => TRUE,
+                    	'message'=>'buku telah diubah'
+                	], REST_Controller::HTTP_OK);
+			}
+			else{
+				$this->response([
+	                    'status' => FALSE,
+	                    'message' => 'gagal mengubah data!'
+                	], REST_Controller::HTTP_BAD_REQUEST);
+			}
+		}
 
-		// public function index_delete(){
-		// 	$id = $this->delete('id');
-		// 	if($id==null){
-		// 		$this->response([
-        //             'status' => FALSE,
-        //             'message' => 'provide an id!'
-        //         ], REST_Controller::HTTP_BAD_REQUEST);
-		// 	}
-		// 	else{
-		// 		if($this->Mrest->del_mhs($id) > 0){
-		// 			$this->response([
-	    //                 'status' => TRUE,
-	    //                 'message' => 'deleted'
-        //         	], REST_Controller::HTTP_NO_CONTENT);
-		// 		}
-		// 		else{
-		// 			$this->response([
-	    //                 'status' => FALSE,
-	    //                 'message' => 'id not found!'
-        //         	], REST_Controller::HTTP_BAD_REQUEST);
-		// 		}
-		// 	}
-		// }
-
-		// public function index_put(){
-		// 	$id = $this->put('nim');
-		// 	$data = [
-		// 		'nim'=>$this->put('nim'),
-		// 		'nama'=>$this->put('nama'),
-		// 		'alamat'=>$this->put('alamat'),
-		// 		'tgl_lahir'=>$this->put('tgl_lahir')
-		// 	];
-		// 	if($this->Mrest->edit_mhs($data, $id)>	0){
-		// 		$this->response([
-        //             	'status' => TRUE,
-        //             	'message'=>'data mahasiswa telah diubah'
-        //         	], REST_Controller::HTTP_OK);
-		// 	}
-		// 	else{
-		// 		$this->response([
-	    //                 'status' => FALSE,
-	    //                 'message' => 'gagal mengubah data!'
-        //         	], REST_Controller::HTTP_BAD_REQUEST);
-		// 	}
-		// }
+		public function index_delete(){
+			$id = $this->delete('nbsn');
+			if($id==null){
+				$this->response([
+                    'status' => FALSE,
+                    'message' => 'provide an id!'
+                ], REST_Controller::HTTP_BAD_REQUEST);
+			}
+			else{
+				if($this->Mrestbuku->del_buku($id) > 0){
+					$this->response([
+	                    'status' => TRUE,
+	                    'message' => 'deleted'
+                	], REST_Controller::HTTP_OK);
+				}
+				else{
+					$this->response([
+	                    'status' => FALSE,
+	                    'message' => 'id not found!'
+                	], REST_Controller::HTTP_BAD_REQUEST);
+				}
+			}
+		}
 
 	}
  ?>
